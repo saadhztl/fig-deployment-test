@@ -76,6 +76,60 @@ export interface ISystemFields {
   title?: string;
 }
 
+export interface ISeo {
+  _version?: number;
+  meta_title?: string;
+  meta_description?: string;
+  meta_keywords?: string;
+  robots?: {
+    enable_search_indexing: boolean;
+    max_image_preview?: ("none" | "standard" | "large") | null;
+    $?: {
+      enable_search_indexing?: CSLPFieldMapping;
+      max_image_preview?: CSLPFieldMapping;
+    };
+  };
+  open_graph?: {
+    type?:
+      | (
+          | "website"
+          | "article"
+          | "book"
+          | "profile"
+          | "music.song"
+          | "music.album"
+          | "music.playlist"
+          | "music.radio_station"
+          | "video.movie"
+          | "video.episode"
+          | "video.tv_show"
+          | "video.other"
+        )
+      | null;
+    image?: {
+      file?: IFile | null;
+      image_width?: string;
+      image_height?: string;
+      $?: {
+        file?: CSLPFieldMapping;
+        image_width?: CSLPFieldMapping;
+        image_height?: CSLPFieldMapping;
+      };
+    };
+    $?: {
+      type?: CSLPFieldMapping;
+      image?: CSLPFieldMapping;
+    };
+  };
+  $?: {
+    meta_title?: CSLPFieldMapping;
+    meta_description?: CSLPFieldMapping;
+    meta_keywords?: CSLPFieldMapping;
+    robots?: CSLPFieldMapping;
+    open_graph?: CSLPFieldMapping;
+  };
+}
+
 export interface IStyledSingleLineText {
   _version?: number;
   text?: string;
@@ -320,20 +374,6 @@ export interface ISocialMediaAccounts {
   }[];
   $?: {
     social_media_accounts?: CSLPFieldMapping;
-  };
-}
-
-export interface ISeo {
-  _version?: number;
-  meta_title?: string;
-  meta_description?: string;
-  meta_keywords?: string;
-  enable_search_indexing: boolean;
-  $?: {
-    meta_title?: CSLPFieldMapping;
-    meta_description?: CSLPFieldMapping;
-    meta_keywords?: CSLPFieldMapping;
-    enable_search_indexing?: CSLPFieldMapping;
   };
 }
 
@@ -837,6 +877,7 @@ export interface IEventsDetailComponents extends ISystemFields {
       | IFaq
       | IContentRte
       | IContent
+      | ILayout
     )[];
     styling_options?: {
       disable_section_block_padding: boolean;
