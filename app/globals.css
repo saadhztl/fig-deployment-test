@@ -1,0 +1,758 @@
+/* add Tailwind base styles, components, and utilities */
+@import 'tailwindcss';
+@source inline("{hover:,}text-{cyan,pink,orange-bright,orange,green,green-dark,black,white,light}");
+@source inline("{hover:,}bg-{cyan,pink,orange-bright,orange,green,green-dark,black,white,light}");
+@source inline("{hover:,}border-{cyan,pink,orange-bright,orange,green,green-dark,black,white,light}");
+
+@theme inline {
+  --font-rawson: var(--font-rawson);
+  --font-softcore-black: var(--font-softcore-black);
+  --font-matty-sans: var(--font-matty-sans);
+  --font-dead-stock: var(--font-dead-stock);
+}
+
+@import './rte.css';
+
+/*
+  The default border color has changed to `currentColor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentColor);
+  }
+  html {
+    @apply h-full;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply h-full flex flex-col;
+  }
+  main {
+    @apply w-full flex-grow shrink-0;
+  }
+  a {
+    text-decoration: none;
+  }
+}
+
+/* Tailwind CSS v4 theme configuration */
+/* stylelint-disable-next-line at-rule-no-unknown */
+@theme {
+  --color-light: #bff300;
+  --color-green: #1bc931;
+  --color-green-dark: #03481c;
+  --color-orange: #ff4800;
+  --color-orange-bright: #ffa500; /* energetic orange, call to action, cta */
+  --color-cyan: #00f1f1; /* cyan, cta accent */
+  --color-pink: #ff7da7; /* pink, cta */
+  --color-dark: #000000;
+  --color-yellow: #fff730;
+
+  --breakpoint-small-mobile: 430px;
+  --breakpoint-mobile: 640px;
+  --breakpoint-tablet: 768px;
+  --breakpoint-desktop: 1024px;
+  --breakpoint-large-desktop: 1280px;
+  --breakpoint-content: 1150px;
+
+  --spacing-max-content: 1232px;
+  --spacing-large-desktop: 1280px;
+
+  --bg-cta-primary: #333333;
+
+  --color-primary: #333333;
+  --color-secondary: #777777;
+  --color-text: #333333;
+  --color-accent: #fd4a5c;
+  --color-primary-pink: #eb80a8; /* soft pink, good for primary highlights */
+  --color-lime-green: #a2d45e; /* fresh lime, energetic feel */
+  --color-teal: #18988b; /* muted teal, balanced tone */
+  --color-purple-deep: #592c82; /* deep violet, strong secondary */
+  --color-navy-dark: #1c355e; /* dark navy, base text or background */
+  --color-yellow-vivid: #ffd900; /* alert yellow, warning or attention */
+  --color-red-soft: #fd4a5c; /* soft red, error or danger */
+  --color-orange-rust: #e64b38; /* earthy orange, warm accents */
+  --color-white: #ffffff; /* pure white */
+  --color-pink-hot: #eb2f5b; /* hot pink, standout element */
+  --color-black: #1c1c1c; /* base black */
+  --color-mint-bright: #08c6b3; /* fresh mint, cool highlight */
+  --color-mint-soft: #5fcbc5; /* soft mint, subdued cool tone */
+  --color-blue-sky: #048dca; /* bright sky blue, clarity & trust */
+  --color-gray-charcoal: #2b2e31; /* dark charcoal gray, text or background */
+  --color-gray-light: #bababa; /* dark charcoal gray, text or background */
+  --color-light-black: #111111;
+  --color-light-gray: #5b5b5b;
+  --color-steel-blue: #06538c;
+  --color-dark-olive: #1e2600;
+  --color-crimson-red: #cb1947;
+  --color-soft-pink: #fccaff;
+  --color-light-cyan: #aeefff;
+  --color-green-tint: #99ff99;
+  /* Form Elements Colors */
+  --color-input-bg: #f6f9f7;
+  --color-input-text: #575757;
+}
+
+@keyframes scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+.stripRichText {
+  white-space: nowrap;
+}
+
+.stripRichText p {
+  display: inline-block;
+  margin: 0 !important;
+  font-size: 24px;
+}
+
+.animate-scroll {
+  animation-name: scroll;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+.pause {
+  animation-play-state: paused;
+}
+
+.textColor-transition {
+  background-image: linear-gradient(to right, #bff300, #bff300 50%, white 50%);
+  color: transparent;
+  background-position: -100% center;
+  background-size: 200% 100%;
+  transition: all 0.3s ease-in-out;
+
+  &:hover {
+    background-position: 0 0;
+  }
+}
+
+.underline-transition {
+  position: relative;
+
+  &::before {
+    content: '';
+    background-color: #bff300;
+    height: 3px;
+    bottom: -3px;
+    position: absolute;
+    left: 0;
+    display: block;
+    transition: all 0.3s ease-in-out;
+    width: 0;
+  }
+
+  &:hover::before {
+    width: 100%;
+  }
+}
+
+.elementHover-transition {
+  transition: transform 0.3s ease-out;
+  position: relative;
+
+  &:hover {
+    transform: translateY(-8px);
+  }
+}
+
+.glowingText {
+  &.green-tint {
+    color: var(--color-green-tint);
+    text-shadow: rgb(0, 204, 0) 0px 0px 5px, rgb(0, 204, 0) 0px 0px 15px,
+      rgb(0, 204, 0) 0px 0px 25px, rgb(0, 204, 0) 0px 0px 20px, rgb(0, 102, 0) 0px 0px 30px,
+      rgb(0, 102, 0) 0px 0px 40px, rgb(0, 102, 0) 0px 0px 40px;
+  }
+  &.light-cyan {
+    color: var(--color-light-cyan);
+    text-shadow: rgb(0, 119, 255) 0px 0px 5px, rgb(0, 119, 255) 0px 0px 15px,
+      rgb(0, 119, 255) 0px 0px 25px, rgb(0, 119, 255) 0px 0px 20px, rgb(0, 0, 255) 0px 0px 30px,
+      rgb(0, 0, 255) 0px 0px 40px, rgb(0, 0, 255) 0px 0px 40px;
+  }
+  &.soft-pink {
+    color: var(--color-soft-pink);
+    text-shadow: rgb(245, 98, 255) 0px 0px 5px, rgb(245, 98, 255) 0px 0px 15px,
+      rgb(245, 98, 255) 0px 0px 25px, rgb(245, 98, 255) 0px 0px 20px, rgb(137, 0, 146) 0px 0px 30px,
+      rgb(137, 0, 146) 0px 0px 40px, rgb(137, 0, 146) 0px 0px 40px;
+  }
+
+  &.yellow {
+    color: var(--color-yellow);
+    text-shadow: rgb(255, 247, 48) 0px 0px 1px, rgb(255, 247, 48) 0px 0px 1px,
+      rgb(255, 247, 48) 0px 0px 1px, rgb(255, 247, 48) 0px 0px 4px, rgb(255, 247, 48) 0px 0px 20px,
+      rgb(203, 25, 71) 0px 0px 20px, rgb(255, 247, 48) 0px 0px 20px;
+    filter: blur(0.5px);
+  }
+
+  &.cyan {
+    color: var(--color-cyan);
+    text-shadow: rgb(0, 241, 241) 0px 0px 1px, rgb(0, 241, 241) 0px 0px 1px,
+      rgb(0, 241, 241) 0px 0px 1px, rgb(0, 241, 241) 0px 0px 4px, rgb(0, 110, 241) 0px 0px 20px,
+      rgb(0, 110, 241) 0px 0px 20px, rgb(0, 110, 241) 0px 0px 20px;
+    filter: blur(0.5px);
+  }
+  &.orange {
+    color: var(--color-orange-bright);
+    text-shadow: rgb(255, 165, 0) 0px 0px 1px, rgb(255, 165, 0) 0px 0px 1px,
+      rgb(255, 165, 0) 0px 0px 1px, rgb(255, 165, 0) 0px 0px 4px, rgb(255, 62, 0) 0px 0px 20px,
+      rgb(255, 62, 0) 0px 0px 20px, rgb(255, 62, 0) 0px 0px 20px;
+    filter: blur(0.5px);
+  }
+  &.green,
+  &.light {
+    color: var(--color-light);
+    text-shadow: rgb(191, 243, 0) 0px 0px 1px, rgb(191, 243, 0) 0px 0px 1px,
+      rgb(191, 243, 0) 0px 0px 1px, rgb(191, 243, 0) 0px 0px 4px, rgb(0, 102, 0) 0px 0px 20px,
+      rgb(0, 102, 0) 0px 0px 20px, rgb(0, 102, 0) 0px 0px 20px;
+    filter: blur(0.5px);
+  }
+  &.pink {
+    color: var(--color-pink);
+    text-shadow: rgb(255, 125, 167) 0px 0px 1px, rgb(255, 125, 167) 0px 0px 1px,
+      rgb(255, 125, 167) 0px 0px 1px, rgb(255, 125, 167) 0px 0px 4px, rgb(203, 25, 71) 0px 0px 20px,
+      rgb(203, 25, 71) 0px 0px 20px, rgb(203, 25, 71) 0px 0px 20px;
+    filter: blur(0.5px);
+  }
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(-100%);
+  }
+  to {
+    transform: translateY(0%);
+  }
+}
+
+.slideIn {
+  animation-name: slideIn;
+  animation-duration: 1s;
+}
+
+.hero-overlay {
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    z-index: 10;
+    border-block-end-width: 8px;
+    width: 100%;
+    height: calc(100% + 8px);
+  }
+}
+
+.swiper-slide-thumb-active {
+  opacity: 1 !important;
+}
+
+/* Wrapper class for rich text content */
+.richtext {
+  /* Keep spacing consistent with default browser look */
+  line-height: 1.5;
+
+  h1 {
+    font-size: 44px;
+    line-height: 55px;
+    margin: 0 0 22px 0;
+    font-weight: bold;
+  }
+
+  h2 {
+    font-size: 36px;
+    line-height: 45px;
+    margin: 0 0 16px 0;
+    font-weight: bold;
+  }
+
+  h3 {
+    font-size: 30px;
+    line-height: 37.5px;
+    margin: 0 0 16px 0;
+    font-weight: bold;
+  }
+
+  h4 {
+    font-size: 24px;
+    line-height: 30px;
+    margin: 0 0 16px 0;
+    font-weight: bold;
+  }
+
+  h5 {
+    font-size: 20px;
+    line-height: 25px;
+    margin: 0 0 16px 0;
+    font-weight: bold;
+  }
+
+  h6 {
+    font-size: 18px;
+    line-height: 22.5px;
+    margin: 0 0 16px 0;
+    font-weight: bold;
+  }
+
+  p {
+    font-size: 18px;
+    line-height: 22.5px;
+    margin: 0 0 15px;
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  ul {
+    font-size: 18px;
+    list-style-type: disc;
+    padding-left: 40px;
+    margin-bottom: 15px;
+  }
+
+  ol {
+    list-style-type: decimal;
+    font-size: 18px;
+    padding-left: 40px;
+    margin-bottom: 15px;
+    outline: 0;
+    vertical-align: baseline;
+  }
+
+  li {
+    background: transparent;
+    border: 0;
+    font-size: 100%;
+    margin-block-end: 0;
+    margin-block-start: 0;
+    outline: 0;
+    vertical-align: baseline;
+  }
+
+  blockquote {
+    margin: 1em 40px;
+  }
+
+  pre {
+    font-family: monospace, monospace;
+    font-size: 1em;
+    margin: 1em 0;
+    padding: 0.5em;
+    background: #f5f5f5;
+    overflow: auto;
+  }
+
+  code {
+    font-family: monospace, monospace;
+    font-size: 1em;
+  }
+
+  a {
+    color: #00bfa5;
+    text-decoration: underline;
+    font-weight: 600;
+  }
+
+  hr {
+    border: 0;
+    border-top: 1px solid #ccc;
+    margin: 1em 0;
+  }
+}
+
+.careers-richtext {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 26px;
+  color: #fff;
+
+  p {
+    margin-block-end: 0.9rem;
+    margin-block-start: 0;
+  }
+
+  a {
+    background-color: transparent;
+    color: #c36;
+  }
+  a:hover {
+    color: #336;
+  }
+
+  ul {
+    list-style-type: disc;
+    padding-left: 40px;
+  }
+  ol {
+    list-style-type: decimal;
+    margin: 1em 0;
+    padding-left: 40px;
+  }
+  li {
+    margin: 0.25em 0;
+  }
+
+  h3 {
+    font-weight: 700;
+    font-size: 32px;
+    line-height: 48px;
+    color: #fff;
+    padding: 0;
+    margin: 0;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+}
+
+.boxcards-richtext {
+  /* Keep spacing consistent with default browser look */
+  line-height: 1.5;
+  text-align: initial;
+
+  h1 {
+    font-size: 2em;
+    margin: 0.67em 0;
+    font-weight: bold;
+  }
+
+  h2 {
+    font-size: 1.5em;
+    margin: 0.83em 0;
+    font-weight: bold;
+  }
+
+  h3 {
+    font-size: 1.17em;
+    margin: 1em 0;
+    font-weight: bold;
+  }
+
+  h4 {
+    font-size: 1em;
+    margin: 1.33em 0;
+    font-weight: bold;
+  }
+
+  h5 {
+    font-size: 0.83em;
+    margin: 1.67em 0;
+    font-weight: bold;
+  }
+
+  h6 {
+    font-size: 0.67em;
+    margin: 2.33em 0;
+    font-weight: bold;
+  }
+
+  p {
+    margin: 0 0 1em;
+  }
+
+  ul {
+    list-style-type: disc;
+    padding-left: 40px;
+  }
+
+  ol {
+    list-style-type: decimal;
+    margin-top: 0;
+    margin-bottom: 1rem;
+    padding-left: 2rem;
+    background: transparent;
+    border: 0;
+    font-size: 100%;
+    margin-block-end: 0;
+    margin-block-start: 0;
+    outline: 0;
+    vertical-align: baseline;
+  }
+
+  li {
+    background: transparent;
+    border: 0;
+    font-size: 100%;
+    margin-block-end: 0;
+    margin-block-start: 0;
+    outline: 0;
+    vertical-align: baseline;
+  }
+
+  blockquote {
+    margin: 1em 40px;
+  }
+
+  pre {
+    font-family: monospace, monospace;
+    font-size: 1em;
+    margin: 1em 0;
+    padding: 0.5em;
+    background: #f5f5f5;
+    overflow: auto;
+  }
+
+  code {
+    font-family: monospace, monospace;
+    font-size: 1em;
+  }
+
+  a {
+    color: #bff300;
+    text-decoration: underline;
+    font-weight: 600;
+
+    &:hover {
+      color: #0a58ca;
+    }
+  }
+
+  hr {
+    border: 0;
+    border-top: 1px solid #ccc;
+    margin: 1em 0;
+  }
+}
+
+.multisport-rte1 {
+  p {
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 32px;
+
+    @media (max-width: 768px) {
+      line-height: 28px;
+    }
+  }
+}
+
+.stroked-text {
+  -webkit-text-stroke-width: 4px;
+  stroke-width: 4px;
+  -webkit-text-stroke-color: #ffffff;
+  stroke: #ffffff;
+
+  @media (max-width: 768px) {
+    -webkit-text-stroke-width: 2px;
+    stroke-width: 2px;
+  }
+}
+
+.multisport-rte2 {
+  p {
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 26px;
+
+    @media (max-width: 768px) {
+      font-size: 16px;
+      line-height: 24px;
+    }
+  }
+}
+
+.comingsoon-richtext {
+  p {
+    margin-block-end: 0.9rem;
+    margin-block-start: 0;
+  }
+}
+.hours-table {
+  table {
+    margin: 0;
+    padding: 0;
+    border-collapse: collapse;
+    border-spacing: 0;
+    border: none;
+    background-color: transparent;
+    width: 100%;
+    font-size: 0.9em;
+    margin-block-end: 15px;
+  }
+
+  td {
+    line-height: 1.5;
+    font-size: 14px;
+    padding: 1px 0px;
+    text-align: center;
+    border-collapse: collapse;
+    border: none;
+    vertical-align: middle;
+  }
+}
+
+.LocationDropdownComponent {
+  section {
+    margin-bottom: 0px;
+  }
+}
+.advertisement-strip-richtext {
+  .emoji {
+    display: inline !important;
+    border: none !important;
+    box-shadow: none !important;
+    height: 18px !important;
+    width: 18px !important;
+    margin: 0 8px !important;
+    vertical-align: -0.1em !important;
+    background: none !important;
+    padding: 0 !important;
+  }
+  /* img {
+    height: 20px;
+    width: 20px;
+  } */
+}
+
+.zoomist-container {
+  overflow: hidden;
+  border-radius: 4px;
+  padding: 40px !important;
+}
+
+.zoomist-image {
+  width: 100%;
+  height: 100%;
+  background-color: #333;
+}
+.zoomist-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+.zoomist-zoomer-in,
+.zoomist-zoomer-out,
+.zoomist-zoomer-reset {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 3rem;
+  height: 3rem;
+  border: solid 2px var(--color-light) !important;
+  background-color: var(--color-light) !important;
+  &.zoomist-zoomer-disabled {
+    background-color: white !important;
+    opacity: 0.8;
+  }
+  .zoomist-zoomer-icon {
+    fill: var(--color-dark) !important;
+  }
+}
+.zoomist-wrapper {
+  background-color: var(--color-gray-light) !important;
+}
+.zoomist-slider-wrapper {
+  background-color: var(--color-dark) !important;
+}
+.zoomist-slider {
+  background-color: var(--color-white) !important;
+  opacity: 1 !important;
+  top: 10px !important;
+  left: 10px !important;
+  .zoomist-slider-bar {
+    background-color: var(--color-dark) !important;
+  }
+  .zoomist-slider-button:before {
+    background-color: var(--color-light) !important;
+  }
+}
+.zoomist-zoomer {
+  display: flex;
+  border-radius: 0 0 0 4px !important;
+  top: 10px !important;
+  right: 10px !important;
+}
+.change-image-btn {
+  padding: 0.5rem;
+  background-color: #eee;
+}
+
+.layoutcomponent {
+  section {
+    margin-bottom: 40px;
+    padding-block: 0px;
+
+    > div {
+      padding-inline: 0px;
+    }
+  }
+  section:last-child {
+    margin-bottom: 0px;
+  }
+}
+
+.sectioncomponent {
+  section:last-child {
+    margin-bottom: 0px;
+  }
+}
+
+.location-dropdown-list {
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: 3px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 3px;
+  }
+}
+
+/* Remove padding from inner <Container> components in LayoutComponent */
+section.layoutcomponent {
+  section div:first-child {
+    padding-right: 0px;
+    padding-left: 0px;
+  }
+}
+
+@keyframes mindbody-right-to-left-slide {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.mindbody-div {
+  animation: mindbody-right-to-left-slide 0.5s ease;
+}
+
+.light-black {
+  color: #111111;
+}
+
+.DuckpinBowlingSection {
+  section {
+    > div {
+      padding-inline: 0px;
+    }
+  }
+
+  .ContentRte {
+    margin-bottom: auto !important;
+  }
+}
