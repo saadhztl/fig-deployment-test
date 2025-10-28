@@ -1,5 +1,5 @@
-import { toPascalCase } from "./string-utils";
-import { NotFound } from "../components/primitives/NotFound";
+import { toPascalCase } from './string-utils';
+import { NotFound } from '../components/primitives/NotFound';
 
 /**
  * Class responsible for registering and retrieving components

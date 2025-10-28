@@ -1,7 +1,10 @@
 import { getEntries } from '@/lib/contentstack';
 import { IDictionaryItems } from '@/lib/generated';
+import { cache } from 'react';
 
-export const fetchGlobalLabels = async () => {
+// Use React cache to deduplicate requests within the same render
+// This prevents multiple fetches during SSR and metadata generation
+export const fetchGlobalLabels = cache(async () => {
   const response = await getEntries({
     contentTypeUid: 'dictionary_items',
   });
@@ -11,4 +14,4 @@ export const fetchGlobalLabels = async () => {
   }
 
   return {} as IDictionaryItems;
-};
+});
